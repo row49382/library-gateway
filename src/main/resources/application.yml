@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: row49382-library-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: library-checkout-service
+          uri: localhost:8081/checkout
+          filters:
+            - AddRequestHeader=x-correlation-id, ${random.uuid}
+            - PrefixPath=/api
+        - id: library-returns-service
+          uri: localhost:8082/returns
+          filters:
+            - AddRequestHeader=x-correlation-id, ${random.uuid}
+            - PrefixPath=/api
+        - id: library-book-inventory-service
+          uri: localhost:8083/books
+          filters:
+            - AddRequestHeader=x-correlation-id, ${random.uuid}
+            - PrefixPath=/api
+        - id: library-fines-service
+          uri: localhost:8084/fines/calculate
+          filters:
+            - AddRequestHeader=x-correlation-id, ${random.uuid}
+            - PrefixPath=/api
+        - id: library-userauth-service
+          uri: localhost:8085/login
+          filters:
+            - AddRequestHeader=x-correlation-id, ${random.uuid}
+            - PrefixPath=/api
